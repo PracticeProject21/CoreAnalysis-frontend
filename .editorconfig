@@ -1,0 +1,3 @@
+[*.ts]
+ij_typescript_use_double_quotes = false
+ij_typescript_spaces_within_imports = true
