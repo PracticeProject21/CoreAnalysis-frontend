@@ -1,3 +1,1 @@
-To run:
-npm install
-npm start
+To run: npm install -> npm start
