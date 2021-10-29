@@ -1,0 +1,71 @@
+@mixin page-alignment {
+  display: flex;
+  justify-content: center;
+  margin: 180px;
+}
+
+@mixin button {
+  border-radius: 10px;
+  height: 48px;
+  color: inherit;
+  background: var(--bg-03);
+  border: var(--border-02);
+
+  span {
+    font-size: 18px;
+  }
+}
+
+@mixin card {
+  border-radius: 14px;
+  padding: 20px 20px 24px 20px;
+  background: var(--bg-01);
+  box-shadow: var(--shadow-01);
+}
+
+@mixin field {
+  height: 48px;
+  border-radius: 10px;
+  padding: 16px;
+  background: var(--bg-02);
+  box-shadow: var(--shadow-02);
+}
+
+@mixin icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+
+  &.dark-icon {
+    background: var(--bg-05);
+    border: var(--border-03);
+
+    svg {
+      color: var(--text-03);
+    }
+  }
+
+  &.light-icon {
+    background: var(--bg-03);
+    border: var(--border-05);
+
+    svg {
+      color: var(--bg-09);
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin close-icon {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}

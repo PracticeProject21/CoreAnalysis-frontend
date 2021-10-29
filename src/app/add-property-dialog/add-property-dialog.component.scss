@@ -1,0 +1,48 @@
+@import '../../styles/mixins';
+
+:host {
+  position: relative;
+  box-shadow: none !important;
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 48px;
+  justify-items: center;
+
+  @include card();
+}
+
+.add-property-close-icon {
+  @include close-icon();
+}
+
+.add-property-title {
+  font-size: 22px;
+}
+
+.add-property-inputs-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 32px;
+}
+
+.add-property-subtitle {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.add-property-input {
+  display: block;
+  width: 260px;
+  box-shadow: none !important;
+  border: var(--border-02);
+
+  @include field();
+}
+
+.add-property-button {
+  width: 40%;
+  margin-top: 12px;
+
+  @include button();
+}

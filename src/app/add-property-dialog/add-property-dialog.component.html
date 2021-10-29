@@ -1,0 +1,19 @@
+<button class="add-property-close-icon" (click)="closeDialog()">
+    <svg width="20" height="20">
+        <use xlink:href="assets/cross-large.svg#cross-large"></use>
+    </svg>
+</button>
+<span class="add-property-title">Добавить свойство</span>
+<div class="add-property-inputs-block">
+    <div>
+        <span class="add-property-subtitle">Свойство</span>
+        <input class="add-property-input">
+    </div>
+    <div>
+        <span class="add-property-subtitle">Значение</span>
+        <input class="add-property-input">
+    </div>
+</div>
+<button class="add-property-button" (click)="addProperty()">
+    <span>Добавить</span>
+</button>
