@@ -1,0 +1,45 @@
+@import '../../styles/mixins';
+
+:host {
+  position: relative;
+
+  @include page-alignment();
+}
+
+.enter-page-card {
+  width: 420px;
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 48px;
+
+  @include card();
+}
+
+.enter-page-title {
+  font-size: 22px;
+  text-align: center;
+}
+
+.enter-page-subtitle {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.enter-page-input {
+  width: 100%;
+  letter-spacing: 3px;
+  color: var(--text-03);
+
+  @include field();
+}
+
+.enter-page-button {
+  margin: 16px auto 0 auto;
+  width: 50%;
+
+  @include button();
+}
+
+.enter-page-close-icon {
+  @include close-icon();
+}

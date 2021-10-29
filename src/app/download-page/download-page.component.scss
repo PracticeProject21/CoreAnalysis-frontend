@@ -1,0 +1,90 @@
+@import '../../styles/mixins';
+
+:host {
+  @include page-alignment();
+}
+
+.download-page-card {
+  width: 75%;
+
+  @include card();
+}
+
+.download-page-top {
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+}
+
+.download-page-instruction-block {
+  height: fit-content !important;
+
+  @include field();
+}
+
+.download-page-instruction-title {
+  font-size: 22px;
+}
+
+.download-page-buttons-block {
+  display: grid;
+  justify-items: end;
+  align-content: end;
+  grid-row-gap: 8px;
+}
+
+.download-page-button-link {
+  text-decoration: none;
+  width: 65%;
+  color: unset;
+
+  button {
+    width: 100%;
+  }
+}
+
+.download-page-button {
+  display: block;
+  width: 65%;
+
+  @include button();
+}
+
+.download-page-bottom {
+  position: relative;
+  display: flex;
+  margin-top: 32px;
+  height: 120px;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--bg-04);
+}
+
+.download-page-image-wrap {
+  position: relative;
+  width: 98px;
+  height: 98px;
+  margin-right: 16px;
+  padding: 6px;
+  background: var(--bg-02);
+}
+
+.download-page-image {
+  width: 86px;
+  height: 86px;
+}
+
+.download-page-delete-icon {
+  position: absolute;
+  bottom: -22px;
+  right: calc(50% - 22px);
+
+  @include icon();
+}
+
+.download-page-arrow-icon {
+  position: absolute;
+  right: -14px;
+  bottom: calc(50% - 22px);
+
+  @include icon();
+}

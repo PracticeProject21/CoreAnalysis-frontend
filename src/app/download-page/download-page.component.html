@@ -1,0 +1,38 @@
+<div class="download-page-card">
+    <div class="download-page-top">
+        <div class="download-page-instruction-block">
+            <span class="download-page-instruction-title">Инструкция</span>
+            <ul>
+                <li>загрузите фотографию</li>
+                <li>нажмите обработать</li>
+                <li>отредактируйте отчет при необходимости</li>
+                <li>сгенерируйте отчет</li>
+            </ul>
+        </div>
+        <div class="download-page-buttons-block">
+            <button class="download-page-button">
+                <span>Добавить фото</span>
+            </button>
+            <a routerLink="../report" class="download-page-button-link">
+                <button class="download-page-button">
+                    <span>Обработать</span>
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="download-page-bottom">
+        <div *ngFor="let image of images" class="download-page-image-wrap">
+            <img src="../../assets/stub-image.png" alt="" class="download-page-image">
+            <div class="download-page-delete-icon dark-icon">
+                <svg width="16" height="16">
+                    <use xlink:href="assets/delete.svg#delete"></use>
+                </svg>
+            </div>
+        </div>
+        <div class="download-page-arrow-icon dark-icon">
+            <svg width="20" height="20">
+                <use xlink:href="assets/arrow-right.svg#arrow-right"></use>
+            </svg>
+        </div>
+    </div>
+</div>
