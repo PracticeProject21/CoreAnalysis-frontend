@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPropertyDialogComponent } from '../add-property-dialog/add-property-dialog.component';
+import { Subject } from 'rxjs';
+import { ReportPageService } from './report-page.service';
 
 @Component({
     selector: 'report-page',
@@ -61,7 +63,13 @@ export class ReportPageComponent {
         },
     ]
 
-    constructor(private matDialog: MatDialog) {}
+    readonly report$ = new Subject<any>();
+
+    constructor(private matDialog: MatDialog, private reportPageService: ReportPageService) {
+        this.reportPageService.getReport().subscribe(
+            (report) => this.report$.next(report as any),
+        );
+    }
 
     openAddPropertyDialog(): void {
         this.matDialog.open(AddPropertyDialogComponent);

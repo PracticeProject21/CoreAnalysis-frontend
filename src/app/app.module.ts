@@ -10,6 +10,9 @@ import { RegistrationDialogModule } from './registration-dialog/registration-dia
 import { DownloadPageModule } from './download-page/download-page.module';
 import { ReportPageModule } from './report-page/report-page.module';
 import { AddPropertyDialogModule } from './add-property-dialog/add-property-dialog.module';
+import { HttpClientModule } from '@angular/common/http';
+import { DownloadPageService } from './download-page/download-page.service';
+import { ReportPageService } from './report-page/report-page.service';
 
 
 @NgModule({
@@ -23,8 +26,9 @@ import { AddPropertyDialogModule } from './add-property-dialog/add-property-dial
         DownloadPageModule,
         ReportPageModule,
         AddPropertyDialogModule,
+        HttpClientModule,
     ],
-    providers: [],
+    providers: [DownloadPageService, ReportPageService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

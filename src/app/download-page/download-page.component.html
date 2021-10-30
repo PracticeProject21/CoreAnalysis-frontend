@@ -10,10 +10,13 @@
             </ul>
         </div>
         <div class="download-page-buttons-block">
-            <button class="download-page-button">
+            <button class="download-page-button"
+                    [class.disabled]="images.length !== 0"
+                    (click)="addImage()">
                 <span>Добавить фото</span>
             </button>
-            <a routerLink="../report" class="download-page-button-link">
+            <input #file type="file" class="download-page-hide" [formControl]="fileControl" accept="image/jpeg">
+            <a class="download-page-button-link" (click)="sendImage()">
                 <button class="download-page-button">
                     <span>Обработать</span>
                 </button>
@@ -21,13 +24,13 @@
         </div>
     </div>
     <div class="download-page-bottom">
-        <div *ngFor="let image of images" class="download-page-image-wrap">
-            <img src="../../assets/stub-image.png" alt="" class="download-page-image">
-            <div class="download-page-delete-icon dark-icon">
+        <div *ngFor="let id of idRange" class="download-page-image-wrap">
+            <img [src]="imagesView[id] | safeUrl" alt="" class="download-page-image">
+            <button class="download-page-delete-icon dark-icon" (click)="deleteImage(id)">
                 <svg width="16" height="16">
                     <use xlink:href="assets/delete.svg#delete"></use>
                 </svg>
-            </div>
+            </button>
         </div>
         <div class="download-page-arrow-icon dark-icon">
             <svg width="20" height="20">
