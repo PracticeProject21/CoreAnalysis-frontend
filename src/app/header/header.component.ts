@@ -12,7 +12,6 @@ export class HeaderComponent {
     constructor(private matDialog: MatDialog) {}
 
     openModal(isEnter: boolean): void {
-        console.log('c');
         isEnter
             ? this.matDialog.open(EnterDialogComponent)
             : this.matDialog.open(RegistrationDialogComponent);

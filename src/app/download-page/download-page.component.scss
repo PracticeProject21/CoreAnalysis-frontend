@@ -65,7 +65,8 @@
   height: 98px;
   margin-right: 16px;
   padding: 6px;
-  background: var(--bg-02);
+  border-radius: 8px;
+  background: var(--bg-03);
 }
 
 .download-page-image {
@@ -75,8 +76,10 @@
 
 .download-page-delete-icon {
   position: absolute;
-  bottom: -22px;
-  right: calc(50% - 22px);
+  bottom: -24px;
+  right: calc(50% - 17px);
+  width: 20px !important;
+  height: 20px !important;
 
   @include icon();
 }
@@ -87,4 +90,8 @@
   bottom: calc(50% - 22px);
 
   @include icon();
+}
+
+.download-page-hide {
+  display: none;
 }

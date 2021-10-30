@@ -14,6 +14,11 @@
   span {
     font-size: 18px;
   }
+
+  &.disabled {
+    pointer-events: none;
+    color: var(--text-04);
+  }
 }
 
 @mixin card {
