@@ -15,9 +15,14 @@
                     (click)="addImage()">
                 <span>Добавить фото</span>
             </button>
+            <mat-button-toggle-group [formControl]="typeControl" class="download-page-toggle-group">
+                <mat-button-toggle value="sun">Дневной свет</mat-button-toggle>
+                <mat-button-toggle value="ultraviolet">Ультрафиолет</mat-button-toggle>
+            </mat-button-toggle-group>
             <input #file type="file" class="download-page-hide" [formControl]="fileControl" accept="image/jpeg">
-            <a class="download-page-button-link" (click)="sendImage()">
-                <button class="download-page-button">
+            <a class="download-page-button-link" routerLink="report" (click)="sendImage()">
+                <button class="download-page-button"
+                        [class.disabled]="images.length === 0 || !typeControl.value">
                     <span>Обработать</span>
                 </button>
             </a>

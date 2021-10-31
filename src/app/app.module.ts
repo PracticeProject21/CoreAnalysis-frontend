@@ -11,8 +11,7 @@ import { DownloadPageModule } from './download-page/download-page.module';
 import { ReportPageModule } from './report-page/report-page.module';
 import { AddPropertyDialogModule } from './add-property-dialog/add-property-dialog.module';
 import { HttpClientModule } from '@angular/common/http';
-import { DownloadPageService } from './download-page/download-page.service';
-import { ReportPageService } from './report-page/report-page.service';
+import { RequestService } from './request.service';
 
 
 @NgModule({
@@ -28,7 +27,7 @@ import { ReportPageService } from './report-page/report-page.service';
         AddPropertyDialogModule,
         HttpClientModule,
     ],
-    providers: [DownloadPageService, ReportPageService],
+    providers: [RequestService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

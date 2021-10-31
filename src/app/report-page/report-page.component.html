@@ -1,41 +1,47 @@
-<div *ngFor="let card of cards" class="report-page-card-wrap">
-    <div class="report-page-icon dark-icon">
-        <svg width="16" height="16">
-            <use xlink:href="assets/delete.svg#delete"></use>
-        </svg>
-    </div>
-    <div class="report-page-card">
-        <img src="../../assets/stub-image.png" class="report-page-card-image">
-        <div class="report-page-card-field" [class.editing]="false">
-            <div>
-                <div *ngFor="let property of card.properties" class="report-page-card-row">
-                    <span>{{ property.name }}</span>
-                    <input [value]="property.value" class="report-page-card-input">
-                    <svg width="12" height="12">
-                        <use xlink:href="assets/cross.svg#cross"></use>
-                    </svg>
+<ng-container *ngIf="(report$ | async) as report">
+    <div *ngFor="let segment of report['segments']" class="report-page-card-wrap">
+        <div class="report-page-icon dark-icon">
+            <svg width="16" height="16">
+                <use xlink:href="assets/delete.svg#delete"></use>
+            </svg>
+        </div>
+        <div class="report-page-card">
+            <img src="../../assets/stub-image.png" class="report-page-card-image">
+            <div class="report-page-card-field" [class.editing]="false">
+                <div>
+                    <div *ngFor="let property of segment['properties']" class="report-page-card-row">
+                        <span>{{ property.title }}</span>
+                        <input [value]="property.value.title" class="report-page-card-input">
+                        <svg width="12" height="12">
+                            <use xlink:href="assets/cross.svg#cross"></use>
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div class="report-page-icon light-icon">
-                    <svg width="24" height="24">
-                        <use xlink:href="assets/edit.svg#edit"></use>
-                    </svg>
-                </div>
-                <div class="report-page-icon light-icon" (click)="openAddPropertyDialog()">
-                    <svg width="26" height="26">
-                        <use xlink:href="assets/add.svg#add"></use>
-                    </svg>
-                </div>
-                <div class="report-page-icon light-icon">
-                    <svg width="20" height="17">
-                        <use xlink:href="assets/check.svg#check"></use>
-                    </svg>
+                <div>
+                    <div class="report-page-icon light-icon">
+                        <svg width="24" height="24">
+                            <use xlink:href="assets/edit.svg#edit"></use>
+                        </svg>
+                    </div>
+                    <div class="report-page-icon light-icon" (click)="openAddPropertyDialog()">
+                        <svg width="26" height="26">
+                            <use xlink:href="assets/add.svg#add"></use>
+                        </svg>
+                    </div>
+                    <div class="report-page-icon light-icon">
+                        <svg width="20" height="17">
+                            <use xlink:href="assets/check.svg#check"></use>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <button class="report-page-button">
+        <span>Сгенерировать отчет</span>
+    </button>
+</ng-container>
+<div *ngIf="!(report$ | async)" class="report-page-loading-wrap">
+    <span class="report-page-loading-text">Loading</span>
+    <img src="assets/loading.png" class="report-page-loading-image" alt="">
 </div>
-<button class="report-page-button">
-    <span>Сгенерировать отчет</span>
-</button>
