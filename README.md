@@ -1,1 +1,2 @@
-To run: npm install -> npm start
+## To run project
+yarn install → yarn start
