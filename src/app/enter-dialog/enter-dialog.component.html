@@ -7,13 +7,28 @@
     <span class="enter-page-title">Вход</span>
     <div>
         <p class="enter-page-subtitle">Логин</p>
-        <input class="field enter-page-input">
+        <input class="field small-shadow enter-page-input" [formControl]="loginControl">
     </div>
     <div>
         <p class="enter-page-subtitle">Пароль</p>
-        <input class="field enter-page-input" type="password">
+        <div class="enter-page-input-wrap">
+            <input #passwordInput
+                   [formControl]="passwordControl"
+                   class="field small-shadow enter-page-input"
+                   type="password">
+            <button (click)="togglePasswordView($event)">
+                <svg width="20" height="20" class="enter-page-icon">
+                    <use xlink:href="assets/close-eye.svg#close-eye"></use>
+                </svg>
+                <svg width="32" height="28" class="enter-page-icon open-eye toggle-visibility">
+                    <use xlink:href="assets/open-eye.svg#open-eye"></use>
+                </svg>
+            </button>
+        </div>
     </div>
-    <button class="enter-page-button">
+    <button class="enter-page-button"
+            [class.disabled]="!loginControl.value || !passwordControl.value"
+            (click)="authorize()">
         <span>Войти</span>
     </button>
 </div>

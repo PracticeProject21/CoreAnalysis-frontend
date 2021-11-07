@@ -7,17 +7,45 @@
     <span class="registration-page-title">Регистрация</span>
     <div>
         <p class="registration-page-subtitle">Введите логин</p>
-        <input class="field registration-page-input">
+        <input class="field small-shadow registration-page-input" [formControl]="loginControl">
     </div>
     <div>
         <p class="registration-page-subtitle">Введите пароль</p>
-        <input class="field registration-page-input" type="password">
+        <div class="registration-page-input-wrap">
+            <input #passwordInput
+                   [formControl]="passwordControl"
+                   class="field small-shadow registration-page-input"
+                   type="password">
+            <button (click)="togglePasswordView($event)">
+                <svg width="20" height="20" class="registration-page-icon">
+                    <use xlink:href="assets/close-eye.svg#close-eye"></use>
+                </svg>
+                <svg width="32" height="28" class="registration-page-icon open-eye toggle-visibility">
+                    <use xlink:href="assets/open-eye.svg#open-eye"></use>
+                </svg>
+            </button>
+        </div>
     </div>
     <div>
         <p class="registration-page-subtitle">Повторите пароль</p>
-        <input class="field registration-page-input" type="password">
+        <div class="registration-page-input-wrap">
+            <input #repeatInput
+                   [formControl]="repeatPasswordControl"
+                   class="field small-shadow registration-page-input"
+                   type="password">
+            <button (click)="togglePasswordView($event)">
+                <svg width="20" height="20" class="registration-page-icon">
+                    <use xlink:href="assets/close-eye.svg#close-eye"></use>
+                </svg>
+                <svg width="32" height="28" class="registration-page-icon open-eye toggle-visibility">
+                    <use xlink:href="assets/open-eye.svg#open-eye"></use>
+                </svg>
+            </button>
+        </div>
     </div>
-    <button class="registration-page-button">
-        <span>Зарегистрироваться</span>
+    <button class="registration-page-button"
+            [class.disabled]="!loginControl.value || (passwordControl.value !== repeatPasswordControl.value)"
+            (click)="register()">
+        <span>Зарегистрировать</span>
     </button>
 </div>

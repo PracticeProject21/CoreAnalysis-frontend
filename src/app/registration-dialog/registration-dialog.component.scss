@@ -43,3 +43,23 @@
 .registration-page-close-icon {
   @include close-icon();
 }
+
+.registration-page-input-wrap {
+  position: relative;
+}
+
+.registration-page-icon {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  opacity: 0.5;
+
+  &.open-eye {
+    right: 10px;
+    top: 10px;
+  }
+
+  &.toggle-visibility {
+    display: none;
+  }
+}

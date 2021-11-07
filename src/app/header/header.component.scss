@@ -13,9 +13,7 @@
 }
 
 .header-enter-block {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 12px;
+  display: flex;
   align-items: center;
 }
 
@@ -30,5 +28,14 @@
   align-items: center;
   border-radius: 10px;
   height: 40px;
+  min-width: 150px;
+  margin-left: 16px;
   border: var(--border-01);
+}
+
+.header-out-image {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-top: -2px;
+  color: var(--text-03);
 }
