@@ -34,6 +34,10 @@
   padding: 16px;
   background: var(--bg-02);
   box-shadow: var(--shadow-02);
+
+  &.small-shadow {
+    box-shadow: var(--shadow-04) !important;
+  }
 }
 
 @mixin icon {

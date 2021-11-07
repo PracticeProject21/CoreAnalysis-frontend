@@ -25,12 +25,32 @@
   margin-bottom: 4px;
 }
 
+.enter-page-input-wrap {
+  position: relative;
+}
+
 .enter-page-input {
   width: 100%;
   letter-spacing: 3px;
   color: var(--text-03);
 
   @include field();
+}
+
+.enter-page-icon {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  opacity: 0.5;
+
+  &.open-eye {
+    right: 10px;
+    top: 10px;
+  }
+
+  &.toggle-visibility {
+    display: none;
+  }
 }
 
 .enter-page-button {
