@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
+import { AuthStore } from '../auth.store';
 
 @Component({
     selector: 'download-page',
@@ -21,7 +22,10 @@ export class DownloadPageComponent {
 
     idRange: any = [];
 
-    constructor(private requestService: RequestService) {
+    constructor(
+        private requestService: RequestService,
+        private authStore: AuthStore,
+    ) {
         this.fileControl.valueChanges.subscribe(() => {
             if (this.fileInput.nativeElement.files?.length) {
                 for (let i=0; i < this.fileInput.nativeElement.files.length; i++) {
@@ -54,6 +58,8 @@ export class DownloadPageComponent {
     sendImage(): void {
         this.requestService
             .sendImage(this.images[0], this.typeControl.value)
-            .subscribe(report => this.requestService.report$.next(report as string));
+            .subscribe(report => this.authStore.update({
+                report: report as string,
+            }));
     }
 }

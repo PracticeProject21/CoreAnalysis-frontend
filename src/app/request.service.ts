@@ -25,6 +25,16 @@ export class RequestService {
         // return of(true);
     }
 
+    getProperties(properties): Observable<any> {
+        let params = new HttpParams();
+        properties.forEach(property => {
+            params = params.set(property['name'], property['value']['name']);
+        });
+        return this.http.get('http://coretest.herokuapp.com/api/fields/', {params: params}).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     sendImage(image: File, type: 'sun' | 'ultraviolet'): Observable<any> {
         const params = new HttpParams().set('type', type);
         return this.http.post('http://coreanalysis.herokuapp.com/api/report/', image, {params: params})
