@@ -20,12 +20,11 @@
                 <mat-button-toggle value="ultraviolet">Ультрафиолет</mat-button-toggle>
             </mat-button-toggle-group>
             <input #file type="file" class="download-page-hide" [formControl]="fileControl" accept="image/jpeg">
-            <a class="download-page-button-link" routerLink="report" (click)="sendImage()">
-                <button class="download-page-button"
-                        [class.disabled]="images.length === 0 || !typeControl.value">
-                    <span>Обработать</span>
-                </button>
-            </a>
+            <button routerLink="report" class="download-page-button"
+                    (click)="sendImage()"
+                    [class.disabled]="images.length === 0 || !typeControl.value">
+                <span>Обработать</span>
+            </button>
         </div>
     </div>
     <div class="download-page-bottom">

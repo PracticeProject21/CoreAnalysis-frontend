@@ -31,13 +31,71 @@
   margin-bottom: 8px;
 }
 
+.add-property-input-wrap {
+  position: relative;
+}
+
 .add-property-input {
   display: block;
   width: 260px;
   box-shadow: none !important;
+  z-index: 2;
+  position: relative;
   border: var(--border-02);
 
+  &.disable-enter {
+    caret-color: transparent;
+    cursor: pointer;
+  }
+
   @include field();
+}
+
+.add-property-dropdown {
+  position: absolute;
+  flex-direction: column;
+  top: 40px;
+  border-radius: 0 0 10px 10px;
+  z-index: 1;
+  padding: 8px;
+  width: 260px;
+  backdrop-filter: blur(2px);
+  max-height: 130px;
+  overflow: scroll;
+  background: var(--bg-10);
+
+  &.toggle-visibility {
+    display: none;
+  }
+}
+
+.add-property-dropdown-button {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 0 -10px;
+  padding: 0 0 0 16px;
+  width: calc(100% + 20px);
+
+  &:hover {
+    color: var(--text-02);
+    background: var(--bg-04) !important;
+  }
+}
+
+.add-property-cross-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+
+  &.toggle-visibility {
+    display: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .add-property-button {
@@ -45,4 +103,14 @@
   margin-top: 12px;
 
   @include button();
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
 }

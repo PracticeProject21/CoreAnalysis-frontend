@@ -38,6 +38,11 @@
   &.small-shadow {
     box-shadow: var(--shadow-04) !important;
   }
+
+  &.disabled {
+    pointer-events: none;
+    background: var(--bg-03);
+  }
 }
 
 @mixin icon {
