@@ -68,7 +68,6 @@ export class ReportPageComponent {
         const deletingProperty = findSegment(segment['properties'], property);
         const indexSeg = this.segments.indexOf(segment);
         const indexPr = segment['properties'].indexOf(deletingProperty);
-        this.segments[indexSeg]['properties'] = this.segments[indexSeg]['properties'].slice(0, indexPr)
-                .concat(this.segments[indexSeg]['properties'].slice(indexPr + 1));
+        this.segments[indexSeg]['properties'] = this.segments[indexSeg]['properties'].slice(0, indexPr);
     }
 }
