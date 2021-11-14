@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
 import { AuthStore } from '../auth.store';
 import { AuthQuery } from '../auth.query';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'download-page',
@@ -29,6 +30,7 @@ export class DownloadPageComponent {
         private requestService: RequestService,
         private authStore: AuthStore,
         private authQuery: AuthQuery,
+        private router: Router,
     ) {
         this.fileControl.valueChanges.subscribe(() => {
             if (this.fileInput.nativeElement.files?.length) {
@@ -62,8 +64,11 @@ export class DownloadPageComponent {
     sendImage(): void {
         this.requestService
             .sendImage(this.images[0], this.typeControl.value)
-            .subscribe(report => this.authStore.update({
-                report: report as string,
-            }));
+            .subscribe(report => {
+                this.authStore.update({
+                    report: report as string,
+                })
+                this.router.navigateByUrl('report');
+            });
     }
 }

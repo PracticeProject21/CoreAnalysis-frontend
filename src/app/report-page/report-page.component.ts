@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPropertyDialogComponent } from '../add-property-dialog/add-property-dialog.component';
 import { RequestService } from '../request.service';
@@ -16,7 +16,7 @@ function findSegment(array, element) {
     selector: 'report-page',
     templateUrl: './report-page.component.html',
     styleUrls: ['./report-page.component.scss'],})
-export class ReportPageComponent {
+export class ReportPageComponent implements OnDestroy {
     segments = this.authStore.getValue().report['segments'].map(item => {
         return {...item, properties: item['properties'].map(property => property)}
     });
@@ -69,5 +69,9 @@ export class ReportPageComponent {
         const indexSeg = this.segments.indexOf(segment);
         const indexPr = segment['properties'].indexOf(deletingProperty);
         this.segments[indexSeg]['properties'] = this.segments[indexSeg]['properties'].slice(0, indexPr);
+    }
+
+    ngOnDestroy(): void {
+        this.authStore.update({report: undefined});
     }
 }

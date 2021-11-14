@@ -13,7 +13,7 @@
                 <div>
                     <div *ngFor="let property of segment['properties']" class="report-page-card-row">
                         <span>{{ property.title }}</span>
-                        <input [value]="property.value.title" class="report-page-card-input">
+                        <div class="report-page-card-input">{{ property.value.title }}</div>
                         <button (click)="deleteProperty(segment, property)">
                             <svg width="12" height="12">
                                 <use xlink:href="assets/cross.svg#cross"></use>
