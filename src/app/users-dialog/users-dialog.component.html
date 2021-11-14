@@ -1,0 +1,33 @@
+<button class="users-page-close-icon" (click)="closeDialog()">
+    <svg width="20" height="20">
+        <use xlink:href="assets/cross-large.svg#cross-large"></use>
+    </svg>
+</button>
+<div class="users-page-card gray-card">
+    <span class="users-page-title">Пользователи</span>
+    <div class="users-page-input-wrap">
+        <input [formControl]="inputControl"
+               class="users-page-input in-gray-card"
+               placeholder="Имя пользователя">
+        <button class="users-page-icon light-icon" (click)="openRegister()">
+            <svg width="24" height="24">
+                <use xlink:href="assets/add.svg#add"></use>
+            </svg>
+        </button>
+    </div>
+    <ng-container *ngIf="users">
+        <div *ngFor="let user of users" class="users-page-user-wrap">
+            <div>
+                <svg width="32" height="32" *ngIf="user.is_admin" class="users-page-user-toggle">
+                    <use xlink:href="assets/admin.svg#admin"></use>
+                </svg>
+            </div>
+            <span>{{ user.name }}</span>
+            <div class="users-page-icon light-icon" (click)="editUserInfo(user.user_id)">
+                <svg width="24" height="24">
+                    <use xlink:href="assets/edit.svg#edit"></use>
+                </svg>
+            </div>
+        </div>
+    </ng-container>
+</div>

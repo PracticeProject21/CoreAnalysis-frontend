@@ -1,3 +1,5 @@
+@import '../../styles/mixins';
+
 :host {
   padding: 10px 60px;
   display: flex;
@@ -6,9 +8,8 @@
 }
 
 .header-title {
-  font-size: 26px;
-  letter-spacing: 4px;
-  font-style: italic;
+  font-size: 20px;
+  letter-spacing: 2px;
   color: var(--text-02);
 }
 
@@ -18,7 +19,7 @@
 }
 
 .header-text {
-  font-size: 20px;
+  font-size: 16px;
   color: var(--text-02);
 }
 
@@ -29,13 +30,31 @@
   border-radius: 10px;
   height: 40px;
   min-width: 150px;
-  margin-left: 16px;
-  border: var(--border-01);
+  margin-left: 8px;
+  border: var(--border-05);
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.header-out-image {
-  font-size: 20px;
-  margin-left: 10px;
-  margin-top: -2px;
-  color: var(--text-03);
+.header-out-icon {
+  color: rgba(80, 52, 52, 0.8);
+  border-radius: 4px !important;
+
+  @include icon();
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.header-settings-icon {
+  color: rgba(80, 52, 52, 0.8);
+  border-radius: 10px !important;
+  border: var(--border-05);
+  height: 26px !important;
+  width: 26px !important;
+
+  @include icon();
 }

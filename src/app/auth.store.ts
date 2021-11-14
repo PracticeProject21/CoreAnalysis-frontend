@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
 
 export interface AuthState {
+    token: string;
     isLogged: boolean;
     isAdmin: boolean;
     username: string;
@@ -10,6 +11,7 @@ export interface AuthState {
 
 export function createInitialState(): AuthState {
     return {
+        token: '',
         isLogged: false,
         isAdmin: false,
         username: '',

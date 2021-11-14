@@ -3,18 +3,18 @@
         <use xlink:href="assets/cross-large.svg#cross-large"></use>
     </svg>
 </button>
-<div class="enter-page-card">
+<div class="enter-page-card gray-card">
     <span class="enter-page-title">Вход</span>
     <div>
         <p class="enter-page-subtitle">Логин</p>
-        <input class="field small-shadow enter-page-input" [formControl]="loginControl">
+        <input class="in-gray-card enter-page-input" [formControl]="loginControl">
     </div>
     <div>
         <p class="enter-page-subtitle">Пароль</p>
         <div class="enter-page-input-wrap">
             <input #passwordInput
                    [formControl]="passwordControl"
-                   class="field small-shadow enter-page-input"
+                   class="in-gray-card enter-page-input"
                    type="password">
             <button (click)="togglePasswordView($event)">
                 <svg width="20" height="20" class="enter-page-icon">

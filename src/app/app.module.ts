@@ -12,6 +12,7 @@ import { ReportPageModule } from './report-page/report-page.module';
 import { AddPropertyDialogModule } from './add-property-dialog/add-property-dialog.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RequestService } from './request.service';
+import { UsersDialogModule } from './users-dialog/users-dialog.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { RequestService } from './request.service';
         ReportPageModule,
         AddPropertyDialogModule,
         HttpClientModule,
+        UsersDialogModule,
     ],
     providers: [RequestService],
     bootstrap: [AppComponent]

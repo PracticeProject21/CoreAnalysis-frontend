@@ -22,7 +22,7 @@
             <input #file type="file" class="download-page-hide" [formControl]="fileControl" accept="image/jpeg">
             <button routerLink="report" class="download-page-button"
                     (click)="sendImage()"
-                    [class.disabled]="images.length === 0 || !typeControl.value">
+                    [class.disabled]="images.length === 0 || !typeControl.value || !(isLogged$ | async)">
                 <span>Обработать</span>
             </button>
         </div>
@@ -36,10 +36,10 @@
                 </svg>
             </button>
         </div>
-        <div class="download-page-arrow-icon dark-icon">
-            <svg width="20" height="20">
-                <use xlink:href="assets/arrow-right.svg#arrow-right"></use>
-            </svg>
-        </div>
+<!--        <div class="download-page-arrow-icon dark-icon">-->
+<!--            <svg width="20" height="20">-->
+<!--                <use xlink:href="assets/arrow-right.svg#arrow-right"></use>-->
+<!--            </svg>-->
+<!--        </div>-->
     </div>
 </div>

@@ -26,6 +26,12 @@
   padding: 20px 20px 24px 20px;
   background: var(--bg-01);
   box-shadow: var(--shadow-01);
+
+  &.gray-card {
+    backdrop-filter: blur(1px);
+    background: #fdfafac4 !important;
+    color: var(--text-03) !important;
+  }
 }
 
 @mixin field {
@@ -43,6 +49,15 @@
     pointer-events: none;
     background: var(--bg-03);
   }
+
+  &.in-gray-card {
+    background: var(--bg-02);
+    border: var(--border-02);
+    box-shadow: none !important;
+  }
+
+  &::-moz-placeholder { color: var(--text-04) }
+  &::-webkit-input-placeholder { color: var(--text-04) }
 }
 
 @mixin icon {
@@ -82,4 +97,5 @@
   position: absolute;
   right: 24px;
   top: 24px;
+  z-index: 1;
 }

@@ -3,18 +3,18 @@
         <use xlink:href="assets/cross-large.svg#cross-large"></use>
     </svg>
 </button>
-<div class="registration-page-card">
-    <span class="registration-page-title">Регистрация</span>
+<div class="registration-page-card gray-card">
+    <span class="registration-page-title" [textContent]="isRegistration ? 'Регистрация' : 'Редактирование'"></span>
     <div>
         <p class="registration-page-subtitle">Введите логин</p>
-        <input class="field small-shadow registration-page-input" [formControl]="loginControl">
+        <input class="in-gray-card registration-page-input" [formControl]="loginControl">
     </div>
     <div>
         <p class="registration-page-subtitle">Введите пароль</p>
         <div class="registration-page-input-wrap">
             <input #passwordInput
                    [formControl]="passwordControl"
-                   class="field small-shadow registration-page-input"
+                   class="in-gray-card registration-page-input"
                    type="password">
             <button (click)="togglePasswordView($event)">
                 <svg width="20" height="20" class="registration-page-icon">
@@ -26,26 +26,13 @@
             </button>
         </div>
     </div>
-    <div>
-        <p class="registration-page-subtitle">Повторите пароль</p>
-        <div class="registration-page-input-wrap">
-            <input #repeatInput
-                   [formControl]="repeatPasswordControl"
-                   class="field small-shadow registration-page-input"
-                   type="password">
-            <button (click)="togglePasswordView($event)">
-                <svg width="20" height="20" class="registration-page-icon">
-                    <use xlink:href="assets/close-eye.svg#close-eye"></use>
-                </svg>
-                <svg width="32" height="28" class="registration-page-icon open-eye toggle-visibility">
-                    <use xlink:href="assets/open-eye.svg#open-eye"></use>
-                </svg>
-            </button>
-        </div>
-    </div>
+    <mat-button-toggle-group [formControl]="adminControl" class="registration-page-toggle-group">
+        <mat-button-toggle value="true">Администратор</mat-button-toggle>
+        <mat-button-toggle value="false">Пользователь</mat-button-toggle>
+    </mat-button-toggle-group>
     <button class="registration-page-button"
-            [class.disabled]="!loginControl.value || (passwordControl.value !== repeatPasswordControl.value)"
-            (click)="register()">
-        <span>Зарегистрировать</span>
+            [class.disabled]="!loginControl.value || !passwordControl.value || !adminControl.value"
+            (click)="finish()">
+        <span [textContent]="isRegistration ? 'Зарегистрировать' : 'Изменить'"></span>
     </button>
 </div>
