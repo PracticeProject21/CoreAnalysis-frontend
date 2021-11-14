@@ -1,64 +1,66 @@
-<button class="add-property-close-icon" (click)="closeDialog()">
-    <svg width="20" height="20">
-        <use xlink:href="assets/cross-large.svg#cross-large"></use>
-    </svg>
-</button>
-<span class="add-property-title">Добавить свойство</span>
-<div class="add-property-inputs-block">
-    <div>
-        <span class="add-property-subtitle">Свойство</span>
-        <div class="add-property-input-wrap">
-            <input class="add-property-input disable-enter"
-                   [formControl]="propertyControl"
-                   (keydown)="false"
-                   (click)="markAsTouched(true)">
-            <div class="add-property-dropdown"
-                 [class.toggle-visibility]="!propertyControl.touched || propertyControl.value">
-                <button *ngFor="let option of properties"
-                        class="add-property-dropdown-button"
-                        (click)="select(option, true)">
-                    {{option}}
-                </button>
-            </div>
-            <button class="add-property-cross-icon"
-                    [class.toggle-visibility]="!propertyControl.value"
-                    (click)="clearInput(true)">
-                <svg width="12" height="12">
-                    <use xlink:href="assets/cross.svg#cross"></use>
-                </svg>
-            </button>
-        </div>
-    </div>
-    <div>
-        <span class="add-property-subtitle">Значение</span>
-        <div class="add-property-input-wrap">
-            <input class="add-property-input disable-enter"
-                   [formControl]="valueControl"
-                   [class.disabled]="!propertyControl.value"
-                   (keydown)="false"
-                   (click)="markAsTouched(false)">
-            <ng-container *ngIf="propertyControl.value">
+<div class="add-property-dialog gray-card">
+    <button class="add-property-close-icon" (click)="closeDialog()">
+        <svg width="20" height="20">
+            <use xlink:href="assets/cross-large.svg#cross-large"></use>
+        </svg>
+    </button>
+    <span class="add-property-title">Добавить свойство</span>
+    <div class="add-property-inputs-block">
+        <div>
+            <span class="add-property-subtitle">Свойство</span>
+            <div class="add-property-input-wrap">
+                <input class="add-property-input disable-enter in-gray-card"
+                       [formControl]="propertyControl"
+                       (keydown)="false"
+                       (click)="markAsTouched(true)">
                 <div class="add-property-dropdown"
-                     [class.toggle-visibility]="!valueControl.touched || valueControl.value">
-                    <button *ngFor="let option of getValues(propertyControl.value)"
+                     [class.toggle-visibility]="!propertyControl.touched || propertyControl.value">
+                    <button *ngFor="let option of properties"
                             class="add-property-dropdown-button"
-                            (click)="select(option['title'], false)">
-                        {{option['title']}}
+                            (click)="select(option, true)">
+                        {{option}}
                     </button>
                 </div>
                 <button class="add-property-cross-icon"
-                        [class.toggle-visibility]="!valueControl.value"
-                        (click)="clearInput(false)">
+                        [class.toggle-visibility]="!propertyControl.value"
+                        (click)="clearInput(true)">
                     <svg width="12" height="12">
                         <use xlink:href="assets/cross.svg#cross"></use>
                     </svg>
                 </button>
-            </ng-container>
+            </div>
+        </div>
+        <div>
+            <span class="add-property-subtitle">Значение</span>
+            <div class="add-property-input-wrap">
+                <input class="add-property-input disable-enter in-gray-card"
+                       [formControl]="valueControl"
+                       [class.disabled]="!propertyControl.value"
+                       (keydown)="false"
+                       (click)="markAsTouched(false)">
+                <ng-container *ngIf="propertyControl.value">
+                    <div class="add-property-dropdown"
+                         [class.toggle-visibility]="!valueControl.touched || valueControl.value">
+                        <button *ngFor="let option of getValues(propertyControl.value)"
+                                class="add-property-dropdown-button"
+                                (click)="select(option['title'], false)">
+                            {{option['title']}}
+                        </button>
+                    </div>
+                    <button class="add-property-cross-icon"
+                            [class.toggle-visibility]="!valueControl.value"
+                            (click)="clearInput(false)">
+                        <svg width="12" height="12">
+                            <use xlink:href="assets/cross.svg#cross"></use>
+                        </svg>
+                    </button>
+                </ng-container>
+            </div>
         </div>
     </div>
+    <button class="add-property-button"
+            [class.disabled]="!propertyControl.value || !valueControl.value"
+            (click)="addProperty()" >
+        <span>Добавить</span>
+    </button>
 </div>
-<button class="add-property-button"
-        [class.disabled]="!propertyControl.value || !valueControl.value"
-        (click)="addProperty()" >
-    <span>Добавить</span>
-</button>

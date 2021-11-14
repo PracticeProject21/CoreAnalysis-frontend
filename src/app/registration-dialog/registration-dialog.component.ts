@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
 
@@ -19,15 +19,17 @@ export class RegistrationDialogComponent {
 
     readonly passwordControl = new FormControl();
 
-    readonly repeatPasswordControl = new FormControl();
+    readonly adminControl = new FormControl();
 
     constructor(
+        @Inject(MAT_DIALOG_DATA)
+        readonly isRegistration: boolean,
         private dialogRef: MatDialogRef<RegistrationDialogComponent>,
         private requestService: RequestService,
     ) {}
 
     closeDialog(): void {
-        this.dialogRef.close();
+        this.dialogRef.close(undefined);
     }
 
     togglePasswordView(event: Event): void {
@@ -40,10 +42,19 @@ export class RegistrationDialogComponent {
         (button.lastChild as HTMLElement).classList.toggle('toggle-visibility');
     }
 
-    register(): void {
-        this.requestService
-            .register(this.loginControl.value.trim(), this.passwordControl.value.trim())
-            .subscribe();
-        this.closeDialog();
+    finish(): void {
+        this.dialogRef.close({
+            isRegistration: this.isRegistration,
+            login: this.loginControl.value,
+            password: this.passwordControl.value,
+            isAdmin: this.adminControl.value
+        });
+    }
+
+    getUsers(): void {
+        this.requestService.getUserInfo()
+            .subscribe(
+                response => console.log(response)
+            );
     }
 }

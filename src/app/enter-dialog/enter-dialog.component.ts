@@ -38,14 +38,20 @@ export class EnterDialogComponent {
 
     authorize(): void {
         this.requestService
-            .authorize(this.loginControl.value.trim(), this.passwordControl.value.trim())
+            .getToken(this.loginControl.value.trim(), this.passwordControl.value.trim())
             .subscribe(response => {
-                response = JSON.parse(response);
                 this.authStore.update({
-                    isLogged: true,
-                    isAdmin: response.isAdmin,
-                    username: response.username,
+                    token: response.token,
                 })
+                this.requestService
+                    .getUserInfo()
+                    .subscribe(response => {
+                        this.authStore.update({
+                            isLogged: true,
+                            isAdmin: response.is_admin,
+                            username: response.name,
+                        })
+                    });
             })
         this.closeDialog();
     }

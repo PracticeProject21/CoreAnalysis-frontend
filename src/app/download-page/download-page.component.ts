@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
 import { AuthStore } from '../auth.store';
+import { AuthQuery } from '../auth.query';
 
 @Component({
     selector: 'download-page',
@@ -16,6 +17,8 @@ export class DownloadPageComponent {
 
     readonly typeControl = new FormControl();
 
+    readonly isLogged$ = this.authQuery.isLogged$;
+
     images: any = [];
 
     imagesView: any = [];
@@ -25,6 +28,7 @@ export class DownloadPageComponent {
     constructor(
         private requestService: RequestService,
         private authStore: AuthStore,
+        private authQuery: AuthQuery,
     ) {
         this.fileControl.valueChanges.subscribe(() => {
             if (this.fileInput.nativeElement.files?.length) {

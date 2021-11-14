@@ -10,18 +10,18 @@
   width: 420px;
   display: grid;
   grid-auto-flow: row;
-  grid-row-gap: 48px;
+  grid-row-gap: 28px;
 
   @include card();
 }
 
 .registration-page-title {
-  font-size: 22px;
+  font-size: 20px;
   text-align: center;
 }
 
 .registration-page-subtitle {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 4px;
 }
 
@@ -61,5 +61,28 @@
 
   &.toggle-visibility {
     display: none;
+  }
+}
+
+.registration-page-toggle-group {
+  border-radius: 10px;
+  height: fit-content;
+  border: var(--border-02);
+
+  &::ng-deep {
+    .mat-button-toggle-focus-overlay {
+      display: none;
+    }
+
+    .mat-button-toggle {
+      border-radius: 10px;
+      padding: 4px;
+      width: 100%;
+
+      &.mat-button-toggle-checked {
+        color: var(--text-03);
+        background: var(--bg-11);
+      }
+    }
   }
 }

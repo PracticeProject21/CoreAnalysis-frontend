@@ -2,12 +2,14 @@
 
 <div class="header-enter-block">
     <ng-container *ngIf="isLogged$ | async">
-        <button *ngIf="isAdmin$ | async" (click)="openModal(false)">
-            <span class="header-text">Регистрация</span>
+        <button class="header-settings-icon" *ngIf="isAdmin$ | async" (click)="openModal(false)">
+            <svg width="20" height="20">
+                <use xlink:href="assets/settings.svg#settings"></use>
+            </svg>
         </button>
-        <div class="header-transparent-button">
+        <div class="header-transparent-button" (click)="toggleOutIcon()">
             <span class="header-text">{{ username$ | async }}</span>
-            <button class="header-out-image" (click)="logOut()">
+            <button class="header-out-icon" [class.hidden]="!showOutImage" (click)="logOut()">
                 <svg width="20" height="20">
                     <use xlink:href="assets/logout.svg#logout"></use>
                 </svg>
