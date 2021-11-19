@@ -2,6 +2,7 @@
 
 :host {
   position: relative;
+  margin: 0 !important;
 
   @include page-alignment();
 }
@@ -33,8 +34,14 @@
   @include field();
 }
 
+.registration-page-button-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .registration-page-button {
-  margin: 16px auto 0 auto;
   width: 75%;
 
   @include button();
@@ -85,4 +92,10 @@
       }
     }
   }
+}
+
+.registration-page-error {
+  margin-top: 12px;
+  color: var(--text-05);
+  font-weight: bold;
 }

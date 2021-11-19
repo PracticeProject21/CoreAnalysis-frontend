@@ -26,9 +26,12 @@
             </button>
         </div>
     </div>
-    <button class="enter-page-button"
-            [class.disabled]="!loginControl.value || !passwordControl.value"
-            (click)="authorize()">
-        <span>Войти</span>
-    </button>
+    <div class="enter-page-button-wrap">
+        <button class="enter-page-button"
+                [class.disabled]="!loginControl.value || !passwordControl.value"
+                (click)="authorize()">
+            <span>Войти</span>
+        </button>
+        <p *ngIf="error" class="enter-page-error">{{error}}</p>
+    </div>
 </div>

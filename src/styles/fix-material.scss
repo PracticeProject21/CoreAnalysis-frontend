@@ -9,11 +9,15 @@
 
 .cdk-global-overlay-wrapper {
   position: fixed;
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(2px);
-  background: var(--bg-10);
+  width: 100%;
+}
+
+.mat-dialog-container {
+  box-shadow: 0 10px 50px 20000px rgb(0 0 0 / 20%);
+  padding: 0 !important;
+  margin-top: 230px;
+  border-radius: 16px !important;
 }

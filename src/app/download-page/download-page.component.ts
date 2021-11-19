@@ -26,6 +26,8 @@ export class DownloadPageComponent {
 
     idRange: any = [];
 
+    loading = false;
+
     constructor(
         private requestService: RequestService,
         private authStore: AuthStore,
@@ -62,8 +64,9 @@ export class DownloadPageComponent {
     }
 
     sendImage(): void {
+        this.loading = true;
         this.requestService
-            .sendImage(this.images[0], this.typeControl.value)
+            .sendImage(this.images[0], this.images[0].name, this.typeControl.value)
             .subscribe(report => {
                 this.authStore.update({
                     report: report as string,

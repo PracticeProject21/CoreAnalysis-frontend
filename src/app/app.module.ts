@@ -13,6 +13,7 @@ import { AddPropertyDialogModule } from './add-property-dialog/add-property-dial
 import { HttpClientModule } from '@angular/common/http';
 import { RequestService } from './request.service';
 import { UsersDialogModule } from './users-dialog/users-dialog.module';
+import { SuccessNotificationModule } from './success-notification/success-notification.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { UsersDialogModule } from './users-dialog/users-dialog.module';
         AddPropertyDialogModule,
         HttpClientModule,
         UsersDialogModule,
+        SuccessNotificationModule,
     ],
     providers: [RequestService],
     bootstrap: [AppComponent]

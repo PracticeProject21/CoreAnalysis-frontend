@@ -1,50 +1,57 @@
-<ng-container *ngIf="segments">
-    <div *ngFor="let segment of segments" class="report-page-card-wrap">
-        <div class="report-page-icon dark-icon" (click)="deleteSegment(segment)">
-            <button>
-                <svg width="16" height="16">
-                    <use xlink:href="assets/delete.svg#delete"></use>
-                </svg>
-            </button>
-        </div>
-        <div class="report-page-card">
-            <img src="../../assets/stub-image.png" class="report-page-card-image">
-            <div class="report-page-card-field" [class.editing]="segment['editing'] === true">
-                <div>
-                    <div *ngFor="let property of segment['properties']" class="report-page-card-row">
-                        <span>{{ property.title }}</span>
-                        <div class="report-page-card-input">{{ property.value.title }}</div>
-                        <button (click)="deleteProperty(segment, property)">
-                            <svg width="12" height="12">
-                                <use xlink:href="assets/cross.svg#cross"></use>
+<div *ngIf="segments" class="report-page-wrap">
+    <img [src]="report['photo_url']" class="report-page-card-image">
+    <div class="report-page-cards-wrap">
+        <div *ngFor="let segment of segments" class="report-page-card-wrap">
+            <div class="report-page-icon dark-icon" (click)="deleteSegment(segment)">
+                <button>
+                    <svg width="16" height="16">
+                        <use xlink:href="assets/delete.svg#delete"></use>
+                    </svg>
+                </button>
+            </div>
+            <div class="report-page-card">
+                <div class="report-page-card-field" [class.editing]="segment['editing'] === true">
+                    <div>
+                        <p [innerHTML]="getSegmentText(segment['offset'], segment['len'])"
+                           class="report-page-segment-range"></p>
+                        <div *ngFor="let property of segment['properties']" class="report-page-card-row">
+                            <span>{{ property.title }}</span>
+                            <div class="report-page-card-input">{{ property.value.title }}</div>
+                            <button (click)="deleteProperty(segment, property)">
+                                <svg width="12" height="12">
+                                    <use xlink:href="assets/cross.svg#cross"></use>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="report-page-icon light-icon" (click)="editSegment(segment)">
+                            <svg width="24" height="24">
+                                <use xlink:href="assets/edit.svg#edit"></use>
                             </svg>
-                        </button>
-                    </div>
-                </div>
-                <div>
-                    <div class="report-page-icon light-icon" (click)="editSegment(segment)">
-                        <svg width="24" height="24">
-                            <use xlink:href="assets/edit.svg#edit"></use>
-                        </svg>
-                    </div>
-                    <div class="report-page-icon light-icon" (click)="openAddPropertyDialog(segment)">
-                        <svg width="26" height="26">
-                            <use xlink:href="assets/add.svg#add"></use>
-                        </svg>
-                    </div>
-                    <div class="report-page-icon light-icon" (click)="saveSegment(segment)">
-                        <svg width="20" height="17">
-                            <use xlink:href="assets/check.svg#check"></use>
-                        </svg>
+                        </div>
+                        <div class="report-page-icon light-icon" (click)="openAddPropertyDialog(segment)">
+                            <svg width="26" height="26">
+                                <use xlink:href="assets/add.svg#add"></use>
+                            </svg>
+                        </div>
+                        <div class="report-page-icon light-icon" (click)="saveSegment(segment)">
+                            <svg width="20" height="17">
+                                <use xlink:href="assets/check.svg#check"></use>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="report-page-button-wrap">
+            <p>Название файла: {{report['photo_name']}}</p>
+            <button class="report-page-button" [class.disabled]="reportIsReady !== 0">
+                <span>Сгенерировать отчет</span>
+            </button>
+        </div>
     </div>
-    <button class="report-page-button" [class.disabled]="reportIsReady !== 0">
-        <span>Сгенерировать отчет</span>
-    </button>
-</ng-container>
+</div>
 <div *ngIf="!segments" class="report-page-loading-wrap">
     <span class="report-page-loading-text">Loading</span>
     <img src="assets/loading.png" class="report-page-loading-image" alt="">

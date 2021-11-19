@@ -2,6 +2,8 @@ import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
+import { SuccessNotificationComponent } from '../success-notification/success-notification.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'authorization-page',
@@ -21,11 +23,14 @@ export class RegistrationDialogComponent {
 
     readonly adminControl = new FormControl();
 
+    error: string;
+
     constructor(
-        @Inject(MAT_DIALOG_DATA)
-        readonly isRegistration: boolean,
         private dialogRef: MatDialogRef<RegistrationDialogComponent>,
         private requestService: RequestService,
+        private matSnackBar: MatSnackBar,
+        @Inject(MAT_DIALOG_DATA)
+        readonly id?: number,
     ) {}
 
     closeDialog(): void {
@@ -43,18 +48,46 @@ export class RegistrationDialogComponent {
     }
 
     finish(): void {
-        this.dialogRef.close({
-            isRegistration: this.isRegistration,
-            login: this.loginControl.value,
-            password: this.passwordControl.value,
-            isAdmin: this.adminControl.value
-        });
-    }
-
-    getUsers(): void {
-        this.requestService.getUserInfo()
-            .subscribe(
-                response => console.log(response)
-            );
+        if (!this.id) {
+            this.requestService
+                .register(this.loginControl.value, this.passwordControl.value, this.adminControl.value)
+                .subscribe(() => {
+                        this.matSnackBar.openFromComponent(SuccessNotificationComponent,
+                            {
+                                horizontalPosition: 'end',
+                                verticalPosition: 'top',
+                                duration: 5000,
+                                data: {
+                                    text: 'Пользователь зарегистрирован',
+                                }
+                            });
+                    this.dialogRef.close()
+                    },
+                    error => {
+                    if (error.status === 409) {
+                        this.error = 'Пользователь с таким именем уже существует';
+                    }
+                })
+        } else {
+            this.requestService
+                .changeUserInfo(this.id, this.loginControl.value, this.passwordControl.value, this.adminControl.value)
+                .subscribe(() => {
+                        this.matSnackBar.openFromComponent(SuccessNotificationComponent,
+                            {
+                                horizontalPosition: 'end',
+                                verticalPosition: 'top',
+                                duration: 5000,
+                                data: {
+                                    text: 'Информация о пользователе изменена',
+                                }
+                            });
+                    this.dialogRef.close()
+                    },
+                    error => {
+                        if (error.status === 409) {
+                            this.error = 'Пользователь с таким именем уже существует';
+                        }
+                })
+        }
     }
 }

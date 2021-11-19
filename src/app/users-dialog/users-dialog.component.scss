@@ -4,6 +4,7 @@
   position: relative;
   min-height: 500px;
   max-height: 538px;
+  margin: 0 !important;
 
   @include page-alignment();
 }

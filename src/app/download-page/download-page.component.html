@@ -23,6 +23,7 @@
             <button class="download-page-button"
                     (click)="sendImage()"
                     [class.disabled]="images.length === 0 || !typeControl.value || !(isLogged$ | async)">
+                <img *ngIf="loading" src="assets/loading.png" class="download-page-loading-image" alt="">
                 <span>Обработать</span>
             </button>
         </div>

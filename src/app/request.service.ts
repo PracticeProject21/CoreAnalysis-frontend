@@ -67,10 +67,12 @@ export class RequestService {
         );
     }
 
-    sendImage(image: File, type: 'sun' | 'ultraviolet'): Observable<any> {
-        // const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
-        const params = new HttpParams().set('type', type);
-        return this.http.post('http://coreanalysis.herokuapp.com/api/report/', image, {params: params})
+    sendImage(image: File, image_name: string, type: 'sun' | 'ultraviolet'): Observable<any> {
+        const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
+        const params = new HttpParams()
+            .set('type', type)
+            .set('photo_name', image_name);
+        return this.http.post('http://coretest.herokuapp.com/api/report/', image, {params: params, headers: header})
             .pipe(
                 catchError(this.handleError)
             );
@@ -82,6 +84,6 @@ export class RequestService {
         } else {
             console.error(`Backend returned code ${error.status}, body was: `, error.error);
         }
-        return throwError('Something bad happened; please try again.');
+        return throwError(error);
     }
 }

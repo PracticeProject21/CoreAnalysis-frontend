@@ -4,7 +4,7 @@
     </svg>
 </button>
 <div class="registration-page-card gray-card">
-    <span class="registration-page-title" [textContent]="isRegistration ? 'Регистрация' : 'Редактирование'"></span>
+    <span class="registration-page-title" [textContent]="!id ? 'Регистрация' : 'Редактирование'"></span>
     <div>
         <p class="registration-page-subtitle">Введите логин</p>
         <input class="in-gray-card registration-page-input" [formControl]="loginControl">
@@ -30,9 +30,12 @@
         <mat-button-toggle value="true">Администратор</mat-button-toggle>
         <mat-button-toggle value="false">Пользователь</mat-button-toggle>
     </mat-button-toggle-group>
-    <button class="registration-page-button"
-            [class.disabled]="!loginControl.value || !passwordControl.value || !adminControl.value"
-            (click)="finish()">
-        <span [textContent]="isRegistration ? 'Зарегистрировать' : 'Изменить'"></span>
-    </button>
+    <div class="registration-page-button-wrap">
+        <button class="registration-page-button"
+                [class.disabled]="!loginControl.value || !passwordControl.value || !adminControl.value"
+                (click)="finish()">
+            <span [textContent]="!id ? 'Зарегистрировать' : 'Изменить'"></span>
+        </button>
+        <p *ngIf="error" class="registration-page-error">{{error}}</p>
+    </div>
 </div>

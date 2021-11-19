@@ -11,6 +11,10 @@
   font-size: 20px;
   letter-spacing: 2px;
   color: var(--text-02);
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .header-enter-block {

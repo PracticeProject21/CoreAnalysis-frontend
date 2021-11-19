@@ -17,6 +17,8 @@ function findSegment(array, element) {
     templateUrl: './report-page.component.html',
     styleUrls: ['./report-page.component.scss'],})
 export class ReportPageComponent implements OnDestroy {
+    readonly report = this.authStore.getValue().report;
+
     segments = this.authStore.getValue().report['segments'].map(item => {
         return {...item, properties: item['properties'].map(property => property)}
     });
@@ -69,6 +71,12 @@ export class ReportPageComponent implements OnDestroy {
         const indexSeg = this.segments.indexOf(segment);
         const indexPr = segment['properties'].indexOf(deletingProperty);
         this.segments[indexSeg]['properties'] = this.segments[indexSeg]['properties'].slice(0, indexPr);
+    }
+
+    getSegmentText(offset: string, len: string): string {
+        let begin = parseInt((+offset * 1000).toString())/10;
+        let end = parseInt(((+offset + +len) * 1000).toString())/10;
+        return 'Сегмент: <b>' + begin + '%</b> - <b>' + end + '%</b>';
     }
 
     ngOnDestroy(): void {
