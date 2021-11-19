@@ -17,6 +17,8 @@ export class EnterDialogComponent {
 
     readonly passwordControl = new FormControl();
 
+    error: string;
+
     constructor(
         private dialogRef: MatDialogRef<EnterDialogComponent>,
         private requestService: RequestService,
@@ -52,7 +54,15 @@ export class EnterDialogComponent {
                             username: response.name,
                         })
                     });
+                    this.closeDialog();
+                },
+                error => {
+                if (error.status === 404) {
+                    this.error = 'Пользователь с таким именем не найден';
+                }
+                if (error.status === 400) {
+                    this.error = 'Неверный пароль';
+                }
             })
-        this.closeDialog();
     }
 }

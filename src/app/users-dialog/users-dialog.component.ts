@@ -33,26 +33,14 @@ export class UsersDialogComponent {
     }
 
     openRegister(): void {
-        this.matDialog.open(RegistrationDialogComponent, {data: true}).afterClosed().subscribe(
-            (value) => {
-                if (value) {
-                    this.requestService.register(value.login, value.password, value.isAdmin)
-                        .subscribe();
-                }
-            }
-        );
+        this.matDialog.open(RegistrationDialogComponent);
+        this.closeDialog();
         this.inputControl.setValue(this.inputControl.value);
     }
 
     editUserInfo(id: number): void {
-        this.matDialog.open(RegistrationDialogComponent, {data: false}).afterClosed().subscribe(
-            (value) => {
-                if (value) {
-                    this.requestService.changeUserInfo(id, value.login, value.password, value.isAdmin)
-                        .subscribe();
-                }
-            }
-        );
+        this.matDialog.open(RegistrationDialogComponent, {data: id});
+        this.closeDialog();
         this.requestService.getUsers(this.inputControl.value)
             .subscribe(response => this.users = response);
     }

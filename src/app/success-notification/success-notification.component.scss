@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  padding: 10px 16px;
+  border-radius: 10px;
+  align-items: center;
+  color: var(--text-02);
+  background: var(--bg-12);
+  border: var(--border-08);
+
+  svg {
+    margin-right: 8px;
+  }
+}
