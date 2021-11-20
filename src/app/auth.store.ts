@@ -6,7 +6,6 @@ export interface AuthState {
     isLogged: boolean;
     isAdmin: boolean;
     username: string;
-    report?: any,
 }
 
 export function createInitialState(): AuthState {

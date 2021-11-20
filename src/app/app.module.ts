@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RequestService } from './request.service';
 import { UsersDialogModule } from './users-dialog/users-dialog.module';
 import { SuccessNotificationModule } from './success-notification/success-notification.module';
+import { ReportGuard } from './report.guard';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { SuccessNotificationModule } from './success-notification/success-notifi
         UsersDialogModule,
         SuccessNotificationModule,
     ],
-    providers: [RequestService],
+    providers: [RequestService, ReportGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

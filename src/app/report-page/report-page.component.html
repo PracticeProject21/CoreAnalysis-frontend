@@ -12,10 +12,16 @@
             <div class="report-page-card">
                 <div class="report-page-card-field" [class.editing]="segment['editing'] === true">
                     <div>
-                        <p [innerHTML]="getSegmentText(segment['offset'], segment['len'])"
-                           class="report-page-segment-range"></p>
+                        <div class="report-page-segment-range">
+                            <span>Сегмент: </span>
+                            <input [value]="getSegmentOffset(segment['offset'])" class="report-page-card-input"
+                                (change)="changeOffset($event, segment)" (keyup)="handleOffset($event)">
+                            <span>% - </span>
+                            <span [textContent]="getSegmentLength(segment['offset'], segment['len'])"></span>
+                            <span>%</span>
+                        </div>
                         <div *ngFor="let property of segment['properties']" class="report-page-card-row">
-                            <span>{{ property.title }}</span>
+                            <span>{{ property.title }}:</span>
                             <div class="report-page-card-input">{{ property.value.title }}</div>
                             <button (click)="deleteProperty(segment, property)">
                                 <svg width="12" height="12">

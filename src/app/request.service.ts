@@ -6,8 +6,6 @@ import { AuthStore } from './auth.store';
 
 @Injectable({providedIn: 'root'})
 export class RequestService {
-    readonly report$ = new Subject<string>();
-
     constructor(private http: HttpClient,
                 private authStore: AuthStore) {}
 
@@ -56,6 +54,25 @@ export class RequestService {
             );
     }
 
+    sendImage(image: File, image_name: string, type: 'sun' | 'ultraviolet'): Observable<any> {
+        const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
+        const params = new HttpParams()
+            .set('type', type)
+            .set('photo_name', image_name);
+        return this.http.post('http://coretest.herokuapp.com/api/report/', image, {params: params, headers: header})
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
+    getReport(id: number): Observable<any> {
+        const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
+        return this.http.get('http://coretest.herokuapp.com/api/reports/' + id + '/', {headers: header})
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
     getProperties(properties): Observable<any> {
         let params = new HttpParams();
         properties.forEach(property => {
@@ -67,12 +84,14 @@ export class RequestService {
         );
     }
 
-    sendImage(image: File, image_name: string, type: 'sun' | 'ultraviolet'): Observable<any> {
+    changeSegment(id: number, offset: string, properties): Observable<any> {
         const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
-        const params = new HttpParams()
-            .set('type', type)
-            .set('photo_name', image_name);
-        return this.http.post('http://coretest.herokuapp.com/api/report/', image, {params: params, headers: header})
+        let requestProperties = {}
+        properties.forEach(property => requestProperties[property.name] = property.value.name)
+        return this.http.put('http://coretest.herokuapp.com/api/segments/' + id + '/', {
+            offset: +offset * 10/10,
+            properties: requestProperties
+        },{headers: header})
             .pipe(
                 catchError(this.handleError)
             );
