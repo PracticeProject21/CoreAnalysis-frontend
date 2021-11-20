@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
-import { AuthStore } from '../auth.store';
 import { AuthQuery } from '../auth.query';
 import { Router } from '@angular/router';
 
@@ -30,7 +29,6 @@ export class DownloadPageComponent {
 
     constructor(
         private requestService: RequestService,
-        private authStore: AuthStore,
         private authQuery: AuthQuery,
         private router: Router,
     ) {
@@ -67,11 +65,6 @@ export class DownloadPageComponent {
         this.loading = true;
         this.requestService
             .sendImage(this.images[0], this.images[0].name, this.typeControl.value)
-            .subscribe(report => {
-                this.authStore.update({
-                    report: report as string,
-                })
-                this.router.navigateByUrl('report');
-            });
+            .subscribe(report => this.router.navigateByUrl(`report/${report.report_id}`));
     }
 }

@@ -2,6 +2,7 @@
 
 :host {
   position: relative;
+  margin: 0 !important;
 
   @include page-alignment();
 }
