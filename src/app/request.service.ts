@@ -97,6 +97,27 @@ export class RequestService {
             );
     }
 
+    deleteSegment(id: number): Observable<any> {
+        const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
+        return this.http.delete('http://coretest.herokuapp.com/api/segments/' + id + '/', {headers: header}).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    addEmptySegment(id: number): Observable<any> {
+        const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
+        return this.http.post('http://coretest.herokuapp.com/api/reports/' + id + '/add_segment/', undefined, {headers: header}).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    getReportFile(id: number): Observable<any> {
+        const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
+        return this.http.get('http://coretest.herokuapp.com/api/reports/' + id + '/file/', {headers: header, responseType: 'blob'}).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
             console.error('An error occurred:', error.error);

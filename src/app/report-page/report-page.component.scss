@@ -45,8 +45,7 @@
 
 .report-page-card-image {
   width: 200px;
-  border-radius: 10px;
-  border: var(--border-05);
+  border-radius: 4px;
 }
 
 .report-page-cards-wrap {
@@ -135,6 +134,11 @@
   display: grid;
   justify-items: end;
   margin-top: 40px;
+
+  .report-page-card-input {
+    margin-left: 4px;
+    padding-left: 0;
+  }
 }
 
 .report-page-button {
@@ -143,6 +147,11 @@
   align-self: end;
 
   @include button();
+
+  &.empty-segment {
+    background: none;
+    height: 40px;
+  }
 }
 
 .report-page-loading-wrap {
@@ -162,4 +171,12 @@
   margin-left: 16px;
   width: 48px;
   height: 48px;
+}
+
+.report-page-empty-segment {
+  display: grid;
+  grid-template-columns: 100px 40px;
+  justify-content: end;
+  text-align: center;
+  align-items: center;
 }
