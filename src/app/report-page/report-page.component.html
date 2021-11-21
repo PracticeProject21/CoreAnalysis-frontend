@@ -50,9 +50,20 @@
                 </div>
             </div>
         </div>
+        <div class="report-page-empty-segment">
+            Добавить сегмент
+            <button class="report-page-icon light-icon" (click)="addEmptySegment()">
+                <svg width="26" height="26">
+                    <use xlink:href="assets/add.svg#add"></use>
+                </svg>
+            </button>
+        </div>
         <div class="report-page-button-wrap">
-            <p>Название файла: {{report['photo_name']}}</p>
-            <button class="report-page-button" [class.disabled]="reportIsReady !== 0">
+            <div>
+                <span>Название файла: </span>
+                <span class="report-page-card-input">{{report['photo_name']}}</span>
+            </div>
+            <button class="report-page-button" [class.disabled]="reportIsReady !== 0" (click)="generateFile()">
                 <span>Сгенерировать отчет</span>
             </button>
         </div>

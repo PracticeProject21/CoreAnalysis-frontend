@@ -18,11 +18,15 @@ function findSegment(array, element) {
     templateUrl: './report-page.component.html',
     styleUrls: ['./report-page.component.scss'],})
 export class ReportPageComponent {
-    report;
+    report: any;
 
-    segments;
+    segments: any;
+
+    reportId: number;
 
     reportIsReady = 0;
+
+    rangeWasChanged: boolean;
 
     constructor(
         private matDialog: MatDialog,
@@ -31,9 +35,10 @@ export class ReportPageComponent {
         private router: Router,
     ) {
         const parts = this.router.url.split('/');
-        const reportId = parseInt(parts[parts.length - 1]);
+        this.reportId = parseInt(parts[parts.length - 1]);
+
         this.requestService
-            .getReport(reportId)
+            .getReport(this.reportId)
             .subscribe(report => {
                 this.report = report;
                 this.segments = this.report.segments;
@@ -62,6 +67,7 @@ export class ReportPageComponent {
         let editingSegment = findSegment(this.segments, segment);
         editingSegment['editing'] = true;
         this.reportIsReady++;
+        this.rangeWasChanged = false;
     }
 
     saveSegment(segment): void {
@@ -71,12 +77,25 @@ export class ReportPageComponent {
 
         this.requestService
             .changeSegment(editingSegment['segment_id'], editingSegment['offset'], editingSegment['properties'])
-            .subscribe();
+            .subscribe(res => {
+                if (this.rangeWasChanged) {
+                    this.requestService
+                        .getReport(this.reportId)
+                        .subscribe(report => {
+                            this.report = report;
+                            this.segments = this.report.segments;
+                        });
+                }
+            });
     }
 
     deleteSegment(segment): void {
         const index = this.segments.indexOf(segment);
         this.segments = this.segments.slice(0, index).concat(this.segments.slice(index + 1));
+
+        this.requestService
+            .deleteSegment(segment.segment_id)
+            .subscribe();
     }
 
     deleteProperty(segment, property): void {
@@ -109,11 +128,27 @@ export class ReportPageComponent {
         }
     }
 
+    addEmptySegment(): void {
+        this.requestService
+            .addEmptySegment(this.report.report_id)
+            .subscribe(res => this.report.segments.push(res));
+    }
+
+    generateFile(): void {
+        this.requestService
+            .getReportFile(this.report.report_id)
+            .subscribe(res => {
+                const url= window.URL.createObjectURL(res);
+                window.open(url);
+            });
+    }
+
     handleOffset(event: KeyboardEvent): void {
         let value = (event.currentTarget as HTMLInputElement).value;
         const regExp = /^[0-9]{1,2}(.[0-9]?)?$/;
         if (!regExp.test(value)) {
             (event.currentTarget as HTMLInputElement).value = value.slice(0, value.length - 1);
         }
+        this.rangeWasChanged = true;
     }
 }
