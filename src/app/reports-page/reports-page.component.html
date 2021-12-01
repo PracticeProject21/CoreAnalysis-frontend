@@ -1,4 +1,4 @@
-<ng-container *ngIf="reports.length">
+<ng-container *ngIf="reports && reports.length !== 0">
     <div *ngFor="let report of reports" class="reports-page-wrap">
         <div class="reports-page-icon dark-icon" (click)="deleteReport(report)">
             <button>
@@ -21,7 +21,7 @@
     </div>
 </ng-container>
 
-<div *ngIf="!reports.length" class="loading-wrap">
+<div *ngIf="!reports" class="loading-wrap">
     <span>Loading</span>
     <img src="assets/loading.png" alt="">
 </div>

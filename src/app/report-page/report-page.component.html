@@ -1,8 +1,9 @@
 <div *ngIf="segments" class="report-page-wrap">
     <img [src]="report['photo_url']" class="report-page-card-image">
     <div class="report-page-cards-wrap">
-        <div *ngFor="let segment of segments" class="report-page-card-wrap">
-            <div class="report-page-icon dark-icon" (click)="deleteSegment(segment)">
+        <div *ngFor="let segment of segments" class="report-page-card-wrap" [class.view-only]="(userId$ | async) !== authorId">
+            <div *ngIf="(userId$ | async) === authorId" class="report-page-icon dark-icon"
+                 (click)="deleteSegment(segment)">
                 <button>
                     <svg width="16" height="16">
                         <use xlink:href="assets/delete.svg#delete"></use>
@@ -30,7 +31,7 @@
                             </button>
                         </div>
                     </div>
-                    <div>
+                    <div *ngIf="(userId$ | async) === authorId" >
                         <div class="report-page-icon light-icon" (click)="editSegment(segment)">
                             <svg width="24" height="24">
                                 <use xlink:href="assets/edit.svg#edit"></use>
@@ -50,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div class="report-page-empty-segment">
+        <div *ngIf="(userId$ | async) === authorId" class="report-page-empty-segment">
             Добавить сегмент
             <button class="report-page-icon light-icon" (click)="addEmptySegment()">
                 <svg width="26" height="26">
@@ -69,7 +70,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="!segments" class="loading-wrap">
+<div *ngIf="!segments && authorId !== -1" class="loading-wrap">
     <span>Loading</span>
     <img src="assets/loading.png" alt="">
 </div>

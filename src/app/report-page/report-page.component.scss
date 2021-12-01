@@ -20,6 +20,10 @@
   align-items: center;
   position: relative;
   margin-bottom: 30px;
+
+  &.view-only {
+    grid-template-columns: unset;
+  }
 }
 
 .report-page-icon {

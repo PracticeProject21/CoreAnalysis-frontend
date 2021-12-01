@@ -5,6 +5,7 @@ import { RequestService } from '../request.service';
 import { AuthStore } from '../auth.store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthQuery } from '../auth.query';
 
 function findSegment(array, element) {
     return array.find(item => {
@@ -29,6 +30,10 @@ export class ReportPageComponent implements OnInit, OnDestroy {
 
     rangeWasChanged: boolean;
 
+    authorId: number;
+
+    readonly userId$ = this.authQuery.userId$;
+
     readonly subscription = new Subscription();
 
     constructor(
@@ -36,6 +41,7 @@ export class ReportPageComponent implements OnInit, OnDestroy {
         private requestService: RequestService,
         private authStore: AuthStore,
         private router: Router,
+        private authQuery: AuthQuery,
     ) {}
 
     ngOnInit(): void {
@@ -45,8 +51,14 @@ export class ReportPageComponent implements OnInit, OnDestroy {
         const getReportRequest$ = this.requestService
             .getReport(this.reportId)
             .subscribe(report => {
+                this.authorId = report.user_id;
                 this.report = report;
                 this.segments = this.report.segments;
+            },
+                error => {
+                if (error.status === 404) {
+                    this.authorId = -1;
+                }
             });
 
         this.subscription.add(getReportRequest$);
