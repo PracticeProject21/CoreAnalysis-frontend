@@ -7,6 +7,9 @@
                 <use xlink:href="assets/settings.svg#settings"></use>
             </svg>
         </button>
+        <div class="header-transparent-button" routerLink="reports">
+            <span class="header-text">Отчеты</span>
+        </div>
         <div class="header-transparent-button" (click)="toggleOutIcon()">
             <span class="header-text">{{ username$ | async }}</span>
             <button class="header-out-icon" [class.hidden]="!showOutImage" (click)="logOut()">
@@ -17,7 +20,7 @@
         </div>
     </ng-container>
 
-    <button *ngIf="!(isLogged$ | async)" class="header-transparent-button" (click)="openModal(true)">
+    <button *ngIf="!(isLogged$ | async)" class="header-transparent-button single" (click)="openModal(true)">
         <span class="header-text">Вход</span>
     </button>
 </div>

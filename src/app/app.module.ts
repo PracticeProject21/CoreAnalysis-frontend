@@ -15,6 +15,7 @@ import { RequestService } from './request.service';
 import { UsersDialogModule } from './users-dialog/users-dialog.module';
 import { SuccessNotificationModule } from './success-notification/success-notification.module';
 import { ReportGuard } from './report.guard';
+import { ReportsRageModule } from './reports-page/reports-rage.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ReportGuard } from './report.guard';
         HttpClientModule,
         UsersDialogModule,
         SuccessNotificationModule,
+        ReportsRageModule
     ],
     providers: [RequestService, ReportGuard],
     bootstrap: [AppComponent]

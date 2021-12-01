@@ -1,15 +1,16 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
 import { AuthStore } from '../auth.store';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'enter-page',
     templateUrl: './enter-dialog.component.html',
     styleUrls: ['./enter-dialog.component.scss'],
 })
-export class EnterDialogComponent {
+export class EnterDialogComponent implements OnDestroy {
     @ViewChild('passwordInput')
     readonly passwordInput: ElementRef<HTMLInputElement>;
 
@@ -18,6 +19,8 @@ export class EnterDialogComponent {
     readonly passwordControl = new FormControl();
 
     error: string;
+
+    readonly subscription = new Subscription();
 
     constructor(
         private dialogRef: MatDialogRef<EnterDialogComponent>,
@@ -39,21 +42,22 @@ export class EnterDialogComponent {
     }
 
     authorize(): void {
-        this.requestService
+        let userInfoRequest$
+        const authorizeRequest$ = this.requestService
             .getToken(this.loginControl.value.trim(), this.passwordControl.value.trim())
             .subscribe(response => {
                 this.authStore.update({
                     token: response.token,
-                })
-                this.requestService
-                    .getUserInfo()
-                    .subscribe(response => {
-                        this.authStore.update({
-                            isLogged: true,
-                            isAdmin: response.is_admin,
-                            username: response.name,
-                        })
-                    });
+                });
+                    userInfoRequest$ = this.requestService
+                        .getUserInfo()
+                        .subscribe(response => {
+                            this.authStore.update({
+                                isLogged: true,
+                                isAdmin: response.is_admin,
+                                username: response.name,
+                            })
+                        });
                     this.closeDialog();
                 },
                 error => {
@@ -64,5 +68,12 @@ export class EnterDialogComponent {
                     this.error = 'Неверный пароль';
                 }
             })
+
+        this.subscription.add(authorizeRequest$);
+        this.subscription.add(userInfoRequest$);
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

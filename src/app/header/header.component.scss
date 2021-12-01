@@ -31,14 +31,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 10px 0 0 10px;
   height: 40px;
   min-width: 150px;
-  margin-left: 8px;
   border: var(--border-05);
 
   &:hover {
     cursor: pointer;
+    background: var(--bg-13);
+    border: var(--border-09) !important;
+  }
+
+  &:last-of-type {
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+  }
+
+  &.single {
+    border: var(--border-05);
+    border-radius: 10px;
   }
 }
 
@@ -59,6 +70,7 @@
   border: var(--border-05);
   height: 26px !important;
   width: 26px !important;
+  margin-right: 8px;
 
   @include icon();
 }
