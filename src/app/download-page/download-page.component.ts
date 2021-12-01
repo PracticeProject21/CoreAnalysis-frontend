@@ -1,15 +1,16 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
 import { AuthQuery } from '../auth.query';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'download-page',
     templateUrl: './download-page.component.html',
     styleUrls: ['./download-page.component.scss'],
 })
-export class DownloadPageComponent {
+export class DownloadPageComponent implements OnInit, OnDestroy{
     @ViewChild('file')
     fileInput: ElementRef<HTMLInputElement>;
 
@@ -27,12 +28,16 @@ export class DownloadPageComponent {
 
     loading = false;
 
+    readonly subscription = new Subscription();
+
     constructor(
         private requestService: RequestService,
         private authQuery: AuthQuery,
         private router: Router,
-    ) {
-        this.fileControl.valueChanges.subscribe(() => {
+    ) {}
+
+    ngOnInit(): void {
+        const inputChanges$ = this.fileControl.valueChanges.subscribe(() => {
             if (this.fileInput.nativeElement.files?.length) {
                 for (let i=0; i < this.fileInput.nativeElement.files.length; i++) {
                     this.images.push(this.fileInput.nativeElement.files[i]);
@@ -41,6 +46,8 @@ export class DownloadPageComponent {
             }
             this.idRange = Array(this.images.length).fill(0).map((x,i)=> i);
         });
+
+        this.subscription.add(inputChanges$);
     }
 
     addImage(): void {
@@ -63,8 +70,14 @@ export class DownloadPageComponent {
 
     sendImage(): void {
         this.loading = true;
-        this.requestService
+        const sendRequest$ = this.requestService
             .sendImage(this.images[0], this.images[0].name, this.typeControl.value)
             .subscribe(report => this.router.navigateByUrl(`report/${report.report_id}`));
+
+        this.subscription.add(sendRequest$);
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

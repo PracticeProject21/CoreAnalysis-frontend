@@ -118,8 +118,25 @@ export class RequestService {
         );
     }
 
+    getReports(onlyMy: boolean): Observable<any> {
+        const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
+        const params = new HttpParams().set('my', onlyMy);
+        return this.http.get('http://coretest.herokuapp.com/api/reports/', {headers: header, params: params}).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    deleteReport(id: number): Observable<any> {
+        const header = new HttpHeaders().set('Authorization', this.authStore.getValue().token);
+        return this.http.delete('http://coretest.herokuapp.com/api/reports/' + id + '/', {headers: header}).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(error: HttpErrorResponse) {
-        if (error.status === 0) {
+        if (error.status === 401) {
+            this.authStore.update({isLogged: false})
+        } else if (error.status === 0) {
             console.error('An error occurred:', error.error);
         } else {
             console.error(`Backend returned code ${error.status}, body was: `, error.error);

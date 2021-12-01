@@ -1,16 +1,17 @@
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { RequestService } from '../request.service';
 import { SuccessNotificationComponent } from '../success-notification/success-notification.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'authorization-page',
     templateUrl: './registration-dialog.component.html',
     styleUrls: ['./registration-dialog.component.scss'],
 })
-export class RegistrationDialogComponent {
+export class RegistrationDialogComponent implements OnDestroy {
     @ViewChild('passwordInput')
     readonly passwordInput: ElementRef<HTMLInputElement>;
 
@@ -24,6 +25,8 @@ export class RegistrationDialogComponent {
     readonly adminControl = new FormControl();
 
     error: string;
+
+    readonly subscription = new Subscription();
 
     constructor(
         private dialogRef: MatDialogRef<RegistrationDialogComponent>,
@@ -48,8 +51,9 @@ export class RegistrationDialogComponent {
     }
 
     finish(): void {
+        let regiesterRequest$, changeInfoRequest$;
         if (!this.id) {
-            this.requestService
+            regiesterRequest$ = this.requestService
                 .register(this.loginControl.value, this.passwordControl.value, this.adminControl.value)
                 .subscribe(() => {
                         this.matSnackBar.openFromComponent(SuccessNotificationComponent,
@@ -69,7 +73,7 @@ export class RegistrationDialogComponent {
                     }
                 })
         } else {
-            this.requestService
+            changeInfoRequest$ = this.requestService
                 .changeUserInfo(this.id, this.loginControl.value, this.passwordControl.value, this.adminControl.value)
                 .subscribe(() => {
                         this.matSnackBar.openFromComponent(SuccessNotificationComponent,
@@ -89,5 +93,12 @@ export class RegistrationDialogComponent {
                         }
                 })
         }
+
+        this.subscription.add(regiesterRequest$)
+        this.subscription.add(changeInfoRequest$)
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

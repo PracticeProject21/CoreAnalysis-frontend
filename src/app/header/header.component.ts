@@ -4,6 +4,7 @@ import { EnterDialogComponent } from '../enter-dialog/enter-dialog.component';
 import { AuthQuery } from '../auth.query';
 import { AuthStore } from '../auth.store';
 import { UsersDialogComponent } from '../users-dialog/users-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -23,6 +24,7 @@ export class HeaderComponent {
         private matDialog: MatDialog,
         private authQuery: AuthQuery,
         private authStore: AuthStore,
+        private router: Router,
     ) {}
 
     openModal(isEnter: boolean): void {
@@ -32,7 +34,8 @@ export class HeaderComponent {
     }
 
     logOut(): void {
-        this.authStore.update({ isLogged: false })
+        this.authStore.update({ isLogged: false });
+        this.router.navigateByUrl('');
     }
 
     toggleOutIcon(): void {

@@ -1,9 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPropertyDialogComponent } from '../add-property-dialog/add-property-dialog.component';
 import { RequestService } from '../request.service';
 import { AuthStore } from '../auth.store';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 function findSegment(array, element) {
     return array.find(item => {
@@ -17,7 +18,7 @@ function findSegment(array, element) {
     selector: 'report-page',
     templateUrl: './report-page.component.html',
     styleUrls: ['./report-page.component.scss'],})
-export class ReportPageComponent {
+export class ReportPageComponent implements OnInit, OnDestroy {
     report: any;
 
     segments: any;
@@ -28,25 +29,31 @@ export class ReportPageComponent {
 
     rangeWasChanged: boolean;
 
+    readonly subscription = new Subscription();
+
     constructor(
         private matDialog: MatDialog,
         private requestService: RequestService,
         private authStore: AuthStore,
         private router: Router,
-    ) {
+    ) {}
+
+    ngOnInit(): void {
         const parts = this.router.url.split('/');
         this.reportId = parseInt(parts[parts.length - 1]);
 
-        this.requestService
+        const getReportRequest$ = this.requestService
             .getReport(this.reportId)
             .subscribe(report => {
                 this.report = report;
                 this.segments = this.report.segments;
             });
+
+        this.subscription.add(getReportRequest$);
     }
 
     openAddPropertyDialog(segment): void {
-        this.requestService.getProperties(segment['properties'])
+        const getPropertiesRequest$ = this.requestService.getProperties(segment['properties'])
             .subscribe(response => {
                 if (response.length !== 0) {
                     this.matDialog.open(AddPropertyDialogComponent, {
@@ -61,6 +68,8 @@ export class ReportPageComponent {
                     )
                 }
             });
+
+        this.subscription.add(getPropertiesRequest$);
     }
 
     editSegment(segment): void {
@@ -75,11 +84,12 @@ export class ReportPageComponent {
         delete editingSegment['editing'];
         this.reportIsReady--;
 
-        this.requestService
+        let getReportRequest$;
+        const changeSegmentRequest$ = this.requestService
             .changeSegment(editingSegment['segment_id'], editingSegment['offset'], editingSegment['properties'])
             .subscribe(res => {
                 if (this.rangeWasChanged) {
-                    this.requestService
+                    getReportRequest$ = this.requestService
                         .getReport(this.reportId)
                         .subscribe(report => {
                             this.report = report;
@@ -87,15 +97,20 @@ export class ReportPageComponent {
                         });
                 }
             });
+
+        this.subscription.add(changeSegmentRequest$);
+        this.subscription.add(getReportRequest$);
     }
 
     deleteSegment(segment): void {
         const index = this.segments.indexOf(segment);
         this.segments = this.segments.slice(0, index).concat(this.segments.slice(index + 1));
 
-        this.requestService
+        const deleteSegmentRequest$ = this.requestService
             .deleteSegment(segment.segment_id)
             .subscribe();
+
+        this.subscription.add(deleteSegmentRequest$);
     }
 
     deleteProperty(segment, property): void {
@@ -129,18 +144,22 @@ export class ReportPageComponent {
     }
 
     addEmptySegment(): void {
-        this.requestService
+        const emptySegmentRequest$ = this.requestService
             .addEmptySegment(this.report.report_id)
             .subscribe(res => this.report.segments.push(res));
+
+        this.subscription.add(emptySegmentRequest$);
     }
 
     generateFile(): void {
-        this.requestService
+        const getFileRequest$ = this.requestService
             .getReportFile(this.report.report_id)
             .subscribe(res => {
                 const url= window.URL.createObjectURL(res);
                 window.open(url);
             });
+
+        this.subscription.add(getFileRequest$);
     }
 
     handleOffset(event: KeyboardEvent): void {
@@ -150,5 +169,9 @@ export class ReportPageComponent {
             (event.currentTarget as HTMLInputElement).value = value.slice(0, value.length - 1);
         }
         this.rangeWasChanged = true;
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

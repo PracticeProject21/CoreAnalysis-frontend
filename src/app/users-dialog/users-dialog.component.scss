@@ -14,7 +14,7 @@
 }
 
 .users-page-card {
-  width: 420px;
+  width: 450px;
   display: flex;
   flex-direction: column;
   max-height: 600px;
@@ -52,9 +52,9 @@
   padding: 10px;
   border-radius: 10px;
   margin-top: 16px;
-  border: var(--border-06);
+  border: var(--border-02);
   color: var(--text-03);
-  background: var(--bg-11);
+  background: #ffffffd1;
 }
 
 .users-page-user-toggle {

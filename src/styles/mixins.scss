@@ -15,6 +15,10 @@
     font-size: 18px;
   }
 
+  &:hover {
+    background: var(--bg-02);
+  }
+
   &.disabled {
     pointer-events: none;
     color: var(--text-04);
@@ -77,6 +81,12 @@
     svg {
       color: var(--text-03);
     }
+
+    &:hover {
+      svg {
+        opacity: 0.8;
+      }
+    }
   }
 
   &.light-icon {
@@ -98,4 +108,25 @@
   right: 24px;
   top: 24px;
   z-index: 1;
+}
+
+@mixin loading-wrap {
+  position: absolute;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  opacity: 0.7;
+
+  span {
+    font-size: 32px;
+    color: var(--text-03);
+  }
+
+  img {
+    margin-left: 16px;
+    width: 48px;
+    height: 48px;
+  }
 }

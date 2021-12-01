@@ -17,18 +17,23 @@
 
 .download-page-instruction-block {
   height: fit-content !important;
+  color: var(--text-03);
 
   @include field();
 }
 
 .download-page-instruction-title {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .download-page-buttons-block {
   display: grid;
   justify-items: end;
   grid-row-gap: 8px;
+
+  ul {
+    padding-left: 30px;
+  }
 }
 
 .download-page-button {

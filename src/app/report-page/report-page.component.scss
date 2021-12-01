@@ -66,8 +66,8 @@
 
     .report-page-icon {
       &:first-of-type {
-        box-shadow: var(--shadow-03);
-          pointer-events: none;
+        opacity: 0.6;
+        pointer-events: none;
       }
 
       &:nth-child(2),
@@ -154,23 +154,8 @@
   }
 }
 
-.report-page-loading-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 100px;
-  opacity: 0.7;
-}
-
-.report-page-loading-text {
-  font-size: 32px;
-  color: var(--text-03);
-}
-
-.report-page-loading-image {
-  margin-left: 16px;
-  width: 48px;
-  height: 48px;
+.loading-wrap {
+  @include loading-wrap();
 }
 
 .report-page-empty-segment {
