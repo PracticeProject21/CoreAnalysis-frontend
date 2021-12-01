@@ -20,6 +20,8 @@ export class EnterDialogComponent implements OnDestroy {
 
     error: string;
 
+    entering = false;
+
     readonly subscription = new Subscription();
 
     constructor(
@@ -42,6 +44,7 @@ export class EnterDialogComponent implements OnDestroy {
     }
 
     authorize(): void {
+        this.entering = true;
         let userInfoRequest$
         const authorizeRequest$ = this.requestService
             .getToken(this.loginControl.value.trim(), this.passwordControl.value.trim())
@@ -56,6 +59,7 @@ export class EnterDialogComponent implements OnDestroy {
                                 isLogged: true,
                                 isAdmin: response.is_admin,
                                 username: response.name,
+                                userId: response.user_id,
                             })
                         });
                     this.closeDialog();

@@ -13,4 +13,6 @@ export class AuthQuery extends Query<AuthState> {
     readonly username$ = this.select('username');
 
     readonly isAdmin$ = this.select('isAdmin');
+
+    readonly userId$ = this.select('userId');
 }

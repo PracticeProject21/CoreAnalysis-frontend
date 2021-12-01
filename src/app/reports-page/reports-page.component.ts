@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./reports-page.component.scss']
 })
 export class ReportsPageComponent implements OnInit, OnDestroy {
-    reports: any = [];
+    reports: any;
 
     readonly subscription = new Subscription();
 

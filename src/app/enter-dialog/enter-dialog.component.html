@@ -30,6 +30,7 @@
         <button class="enter-page-button"
                 [class.disabled]="!loginControl.value || !passwordControl.value"
                 (click)="authorize()">
+            <img *ngIf="entering" src="assets/loading.png" class="enter-dialog-loading-image" alt="">
             <span>Войти</span>
         </button>
         <p *ngIf="error" class="enter-page-error">{{error}}</p>
